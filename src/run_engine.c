@@ -16,26 +16,29 @@ static DN_ERROR	run_errors(ENGINE *doom, DN_ERROR error)
 
 static void	init_engine(ENGINE *doom)
 {
-	POWER = false;
-	PAUSE = false;
-	LOGO = NULL;
+	doom->mode = MAIN_MENU;
+	GUN.sprite = NULL;
+	CROSS = NULL;
 	WINDOW = NULL;
 	SCREEN = NULL;
+	SHOT = false;
 	WINDOW_WIDTH = START_WIDTH;
 	WINDOW_HEIGHT = START_HEIGHT;
+	doom->current_time = 0;
+	doom->last_time = 0;
+	doom->delta_time = 0;
 }
 
 static DN_ERROR	load_textures(ENGINE *doom)
 {
-	if (!(LOGO = read_tga("images/logo.tga")))
-		return (IMAGE_ERROR);
+	load_gun_textures(doom);
 	return (OK);
 }
 
 DN_ERROR	run_engine(ENGINE *doom)
 {
 	init_engine(doom);
-	if (SDL_Init(SDL_INIT_VIDEO) == -1)
+	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		return (SDL_ERROR);
 	if (!(WINDOW = SDL_CreateWindow("DoomNukem", SDL_WINDOWPOS_CENTERED,
 												SDL_WINDOWPOS_CENTERED,
@@ -47,8 +50,17 @@ DN_ERROR	run_engine(ENGINE *doom)
 	if (load_textures(doom) != OK)
 		return(run_errors(doom, IMAGE_ERROR));
 	SDL_UpdateWindowSurface(WINDOW);
-	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
+	Mix_Init(MIX_INIT_MP3);
+	TTF_Init();
+	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+		perror(Mix_GetError());
+
 	SCREEN_PTR = doom->window.screen->pixels;
-	POWER = true;
+	map_init(doom);
+	if (!(SHOT_SOUND = Mix_LoadWAV("sounds/gunshot.wav")))
+		perror(Mix_GetError());
+	init_render(doom);
+	MOUSE = true;
+	hide_mouse(doom);
 	return (OK);
 }

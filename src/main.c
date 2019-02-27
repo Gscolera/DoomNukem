@@ -1,19 +1,16 @@
 #include "doom_nukem.h"
 
-DN_ERROR		main(void)
+int		main(void)
 {
 	ENGINE	doom;
 
 	run_engine(&doom);
-	while (doom.power)
+	while (doom.mode != QUIT)
 	{
-		
-		run_game(&doom);
+		select_game_mode(&doom);
+		count_delta_time(&doom);
 		parse_events(&doom);
-		
 	}
-	free(doom.texture.logo->pixels);
-	free(doom.texture.logo);
 	stop_engine(&doom);
 	exit(OK);
 }

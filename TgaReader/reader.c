@@ -2,12 +2,12 @@
 
 static bool		read_file(TGA *tga, char *path)
 {
-	struct stat st;
+	SDL_RWops	*io;
 	int			fd;
 
-	if (lstat(path, &st) == -1)
-		return (open_error(path));
-	tga->size = st.st_size;
+	io = SDL_RWFromFile(path, "rb");
+	tga->size = io->size(io);
+	io->close(io);
 	if (!(tga->data = (U8 *)malloc(tga->size)))
 		return (mem_error(tga));
 	if (!(tga->image = (IMAGE *)malloc(sizeof(IMAGE))))
@@ -35,8 +35,8 @@ static bool	read_image_info(TGA *tga)
 
 static U32	get_pix_values(TGA *tga)
 {
-	
-	return (tga->ptr[3] << 24 | tga->ptr[2] << 16 
+
+	return (tga->ptr[3] << 24 | tga->ptr[2] << 16
 					| tga->ptr[1] << 8 | tga->ptr[0]);
 }
 
@@ -45,7 +45,7 @@ static void	read_data(TGA *tga)
 	U32		i;
 	U32		length;
 	bool	type;
-	
+
 	i = 0;
 	while(i < tga->image->length)
 	{

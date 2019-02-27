@@ -7,7 +7,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <sys/stat.h>
-
+# include <SDL2/SDL.h>
 # define TGA			t_tga
 # define IMAGE			t_image
 # define U32			unsigned int
@@ -31,6 +31,7 @@ typedef struct			s_tga
 }						t_tga;
 
 IMAGE					*read_tga(char *path);
+void					free_image(IMAGE *image);
 bool					open_error(char *path);
 bool					mem_error(TGA *tga);
 
