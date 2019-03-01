@@ -30,9 +30,9 @@ void	init_bar(EDITOR *editor)
 	BAR.text_color.r = 146;
 	BAR.text_color.g = 155;
 	BAR.text_color.b = 154;
-	BAR.header_color.r = 175;
-	BAR.header_color.g = 138;
-	BAR.header_color.b = 5;
+	BAR.header_color.r = 188;
+	BAR.header_color.g = 157;
+	BAR.header_color.b = 20;
 	clear_surface(BAR.bar, BAR_COLOR);
 }
 

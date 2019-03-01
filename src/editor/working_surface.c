@@ -43,7 +43,8 @@ void	draw_working_surface(SDL_Surface *working_surface)
 
 void	update_working_surface(EDITOR *editor)
 {
-	SDL_BlitSurface(WS, &WS_RECT, EDITOR_SCREEN, &WS_POS);
+	draw_working_surface(WS);
 	draw_points(editor);
+	SDL_BlitSurface(WS, &WS_RECT, EDITOR_SCREEN, &WS_POS);
 	WS_UPDATED = true;
 }

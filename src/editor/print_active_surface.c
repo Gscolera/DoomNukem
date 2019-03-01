@@ -44,7 +44,7 @@ static void	print_points(EDITOR *editor)
 {
 	SDL_Surface	*text;
 	POINT_LIST	*tmp;
-	Sint8		*buff;
+	char		*buff;
 
 	buff = ft_strcat("sd", "Total points: ", ACTIVE_SECTOR->points_amount);
 	text = TTF_RenderText_Blended(BAR.font, buff, BAR.text_color);

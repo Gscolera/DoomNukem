@@ -11,30 +11,57 @@ static void		set_pixel(SDL_Surface *s, Uint16 x, Uint16 y, Uint32 color)
 
 void	draw_point(EDITOR *editor, POINT_LIST *p, Uint32 color)
 {
-	Uint16 	centerx;
-	Uint16 	centery;
-	Uint16	x;
-	Uint16	y;
-	Uint16	size;
+	Uint16	centerx;
+	Uint16	centery;
+	Sint16	radius;
+	Sint16	x;
+	Sint16	y;
 
-	centerx = p->x * GRID_SIZE - WS_RECT.x;
-	centery = p->y * GRID_SIZE - WS_RECT.y;
-	if (ACTIVE_POINT && p->x == ACTIVE_POINT->x && p->y == ACTIVE_POINT->y)
-		size = 8;
-	else
-		size = 6;
-	if (centerx < 0 || centerx >= WS_WIDTH)
-		return ;
-	if (centery < 0 || centery >= WS_HEIGHT)
-		return ;
-	x = centerx - size;
-	while (++x < centerx + size)
+	centerx = p->x * GRID_SIZE;
+	centery = p->y * GRID_SIZE;
+	// if (ACTIVE_POINT->x == p->x && ACTIVE_POINT->y == p->y)
+	// 	radius = 10;
+	// else
+		radius = 7;
+	if (ACTIVE_POINT->x == p->x && ACTIVE_POINT->y == p->y)
+		color = 0x4f0468;
+	x = -radius - 1;
+	while (++x < radius)
 	{
-		y = centery - size;
-		while (++y < centery + size)
-			set_pixel(WS, x, y, color);
+		y = -radius - 1;
+		while (++y < radius)
+		{
+			if (x * x + y * y <= radius * radius)
+				set_pixel(WS, centerx + x, centery + y, color);
+		}
 	}
 }
+// void	draw_point(EDITOR *editor, POINT_LIST *p, Uint32 color)
+// {
+// 	Uint16 	centerx;
+// 	Uint16 	centery;
+// 	Uint16	x;
+// 	Uint16	y;
+// 	Uint16	size;
+
+// 	centerx = p->x * GRID_SIZE - WS_RECT.x;
+// 	centery = p->y * GRID_SIZE - WS_RECT.y;
+// 	if (ACTIVE_POINT && p->x == ACTIVE_POINT->x && p->y == ACTIVE_POINT->y)
+// 		size = 8;
+// 	else
+// 		size = 6;
+// 	if (centerx < 0 || centerx >= WS_WIDTH)
+// 		return ;
+// 	if (centery < 0 || centery >= WS_HEIGHT)
+// 		return ;
+// 	x = centerx - size;
+// 	while (++x < centerx + size)
+// 	{
+// 		y = centery - size;
+// 		while (++y < centery + size)
+// 			set_pixel(WS, x, y, color);
+// 	}
+// }
 
 void	draw_points(EDITOR *editor)
 {

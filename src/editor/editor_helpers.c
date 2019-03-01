@@ -1,6 +1,6 @@
 #include "editor.h"
 
-void	ft_memset(Sint8 *ptr, Sint8 c, Uint32 size)
+void	ft_memset(char *ptr, char c, Uint32 size)
 {
 	if (!ptr)
 		return ;
@@ -23,9 +23,9 @@ static Uint16 get_int_size(Sint32 num)
 	return (size);
 }
 
-void	editor_itoa(Sint32	num, Sint8 *buff)
+void	editor_itoa(Sint32	num, char *buff)
 {
-	Sint8 	*ptr;
+	char 	*ptr;
 	Uint16	i;
 
 	ptr = buff;
@@ -42,9 +42,9 @@ void	editor_itoa(Sint32	num, Sint8 *buff)
 	}
 }
 
-void	editor_dtoa(double num, Sint8 *buff, Sint8 precision)
+void	editor_dtoa(double num, char *buff, char precision)
 {
-	Sint8 	*ptr;
+	char 	*ptr;
 	Uint16	i;
 
 	i = 0;
@@ -57,27 +57,27 @@ void	editor_dtoa(double num, Sint8 *buff, Sint8 precision)
 	while (i++ < precision)
 	{
 		num *= 10;
-		ptr[i] = (Sint8)num + 48;
+		ptr[i] = (char)num + 48;
 		num -= (Sint32)num;
 	}
 }
 
-Sint8	*ft_strcat(Sint8 *format, ...)
+char	*ft_strcat(char *format, ...)
 {
-	Sint8		*buff;
+	char		*buff;
 	Sint16		size;
-	Sint8		precision;
+	char		precision;
 	va_list		list;
 
 	va_start(list, format);
 	size = (atoi(format) > 0) ? atoi(format) : 50;
-	if (!(buff = (Sint8 *)malloc(size)))
+	if (!(buff = (char *)malloc(size)))
 		exit (EDITOR_MEMORY_ERROR);
 	ft_memset(buff, 0, size);
 	while (*format)
 	{
 		if (*format == 's')
-			strcat(buff, va_arg(list, Sint8*));
+			strcat(buff, va_arg(list, char*));
 		else if (*format == 'd')
 			editor_itoa(va_arg(list, Sint32), buff);
 		else if (*format == 'f')

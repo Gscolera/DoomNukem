@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editor.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anton <anton@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gscolera <gscolera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:36:23 by cmelara-          #+#    #+#             */
-/*   Updated: 2019/02/28 02:32:34 by anton            ###   ########.fr       */
+/*   Updated: 2019/03/01 13:39:21 by gscolera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,11 @@ void						draw_sector_list(EDITOR *editor);
 /*
 ******************EDITOR HELPERS*********************************************
 */
-void						ft_memset(Sint8 *ptr, Sint8 c, Uint32 size);
-void						editor_itoa(Sint32 num, Sint8 *buff);
-void						editor_dtoa(double num, Sint8 *buff, Sint8 prec);
-Sint8						*ft_strcat(Sint8 *format, ...);
+void						ft_memset(char *ptr, char c, Uint32 size);
+void						editor_itoa(Sint32 num, char *buff);
+void						editor_dtoa(double num, char *buff, char prec);
+char						*ft_strcat(char *format, ...);
+
+void	draw_point(EDITOR *editor, POINT_LIST *p, Uint32 color);
 
 #endif
